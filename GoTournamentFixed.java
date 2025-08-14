@@ -35,10 +35,14 @@ class Solution {
                 tournament[round][matchIndex + halfSize] = player2;
             }
             
-            // 填充剩余位置（只填充未设置的位置）
-            for (int i = topPlayers; i < totalPlayers; i++) {
-                int targetPos = i;
-                tournament[round][targetPos] = tournament[round - 1][i];
+            // 填充剩余位置（避免覆盖已设置的位置）
+            int remainingPositions = totalPlayers - topPlayers;
+            int remainingPlayers = totalPlayers - topPlayers;
+            
+            for (int i = 0; i < remainingPlayers; i++) {
+                int sourcePos = topPlayers + i;
+                int targetPos = topPlayers + (i % remainingPositions);
+                tournament[round][targetPos] = tournament[round - 1][sourcePos];
             }
         }
         
@@ -63,7 +67,7 @@ class Solution {
 }
 
 // 测试代码
-public class GoTournamentCorrect {
+public class GoTournamentFixed {
     public static void main(String[] args) {
         Solution solution = new Solution();
         
@@ -119,11 +123,15 @@ public class GoTournamentCorrect {
                 System.out.println("  设置: tournament[" + round + "][" + (matchIndex + halfSize) + "]=" + player2);
             }
             
-            // 填充剩余位置（只填充未设置的位置）
-            for (int i = topPlayers; i < totalPlayers; i++) {
-                int targetPos = i;
-                tournament[round][targetPos] = tournament[round - 1][i];
-                System.out.println("  填充: tournament[" + round + "][" + targetPos + "]=" + tournament[round - 1][i]);
+            // 填充剩余位置
+            int remainingPositions = totalPlayers - topPlayers;
+            int remainingPlayers = totalPlayers - topPlayers;
+            
+            for (int i = 0; i < remainingPlayers; i++) {
+                int sourcePos = topPlayers + i;
+                int targetPos = topPlayers + (i % remainingPositions);
+                tournament[round][targetPos] = tournament[round - 1][sourcePos];
+                System.out.println("  填充: tournament[" + round + "][" + targetPos + "]=" + tournament[round - 1][sourcePos]);
             }
         }
         

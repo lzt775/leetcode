@@ -36,9 +36,13 @@ class Solution {
             }
             
             // 填充剩余位置（只填充未设置的位置）
-            for (int i = topPlayers; i < totalPlayers; i++) {
-                int targetPos = i;
-                tournament[round][targetPos] = tournament[round - 1][i];
+            int remainingPositions = totalPlayers - topPlayers;
+            int remainingPlayers = totalPlayers - topPlayers;
+            
+            for (int i = 0; i < remainingPlayers; i++) {
+                int sourcePos = topPlayers + i;
+                int targetPos = topPlayers + (i % remainingPositions);
+                tournament[round][targetPos] = tournament[round - 1][sourcePos];
             }
         }
         
@@ -63,7 +67,7 @@ class Solution {
 }
 
 // 测试代码
-public class GoTournamentCorrect {
+public class GoTournamentRight {
     public static void main(String[] args) {
         Solution solution = new Solution();
         
@@ -120,10 +124,14 @@ public class GoTournamentCorrect {
             }
             
             // 填充剩余位置（只填充未设置的位置）
-            for (int i = topPlayers; i < totalPlayers; i++) {
-                int targetPos = i;
-                tournament[round][targetPos] = tournament[round - 1][i];
-                System.out.println("  填充: tournament[" + round + "][" + targetPos + "]=" + tournament[round - 1][i]);
+            int remainingPositions = totalPlayers - topPlayers;
+            int remainingPlayers = totalPlayers - topPlayers;
+            
+            for (int i = 0; i < remainingPlayers; i++) {
+                int sourcePos = topPlayers + i;
+                int targetPos = topPlayers + (i % remainingPositions);
+                tournament[round][targetPos] = tournament[round - 1][sourcePos];
+                System.out.println("  填充: tournament[" + round + "][" + targetPos + "]=" + tournament[round - 1][sourcePos]);
             }
         }
         
